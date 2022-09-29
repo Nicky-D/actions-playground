@@ -31,12 +31,12 @@ jobs:
           path: build/playground
 
       - name: Debug
-        run: echo "${{github.github.ref_name}}"
+        run: echo "${{github.ref_name}}"
       - name: Debug
-        run: echo "$GITHUB_REF_NAME"
+        run: echo "${GITHUB_REF_NAME}"
 
       - name: create release
         run: |
              curl -X POST  -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
              https://api.github.com/repos/Nicky-D/actions-playground/releases \
-             -d '{"tag_name": "${{github.github.ref_name}}","name": "${{github.github.ref_name}}","body":"Test release","draft":true,"prerelease":true,"generate_release_notes":true}'
+             -d '{"tag_name": "${GITHUB_REF_NAME}","name": "${{github.github.ref_name}}","body":"Test release","draft":true,"prerelease":true,"generate_release_notes":true}'
