@@ -8,6 +8,7 @@ jobs:
         uses: actions/checkout@v3
         with:
          fetch-depth: 1
+
       - name: Debug
         run: set
 
@@ -22,3 +23,9 @@ jobs:
         with:
           name: artifacts.zip
           path: build/playground
+
+      - name: create release
+        run: |
+             curl -X POST  -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $${{ secrets.GITHUB_TOKEN }}"
+             https://api.github.com/repos/$GITHUB_REPOSITORY/releases 
+             -d '{"tag_name":"v1.0.0","target_commitish":"$GITHUB_REF_NAME","name":"v1.0.0","body":"Test release","draft":false,"prerelease":true,"generate_release_notes":true}'
