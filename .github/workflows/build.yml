@@ -35,8 +35,8 @@ jobs:
       - name: Debug
         run: echo "${GITHUB_REF_NAME}"
 
-      - name: create release
-        run: |
-             curl -X POST  -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-             https://api.github.com/repos/Nicky-D/actions-playground/releases \
-             -d '{"tag_name": "${{github.ref_name}}","name": "${{github.ref_name}}","body":"Test release","draft":false,"prerelease":true,"generate_release_notes":true}'
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: build/playgroud
